@@ -69,8 +69,9 @@ def show_sales_list(salesList):
 def get_new_merch_info():
     '''Get Description and Price of Merch Item from user'''
 
-    description = input('Enter Item Description: ')
-    price = input('Enter Item Price: ')
+    description = input('Enter Item Description: ') # request.form.get('description')
+    price = input('Enter Item Price: ') # request.form.get('price')
+
 
     return (description,price)
 
