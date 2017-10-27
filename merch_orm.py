@@ -10,6 +10,7 @@ from events import Event
 from merch import Merch
 import ui
 
+
 #Engine represents the core interface to the database
 
 #The first argument is the url of the database;
@@ -204,7 +205,19 @@ def sales_by_eventID(eid):
         total += sale.numSold * merch.price
 
     print('Total sales at '+event.venue+': $'+str(round(total,2)))
+
     search_session.close()
+
+def saleTotal(sid,mid):
+
+    total = 0
+    search_session = Session()
+    sale = search_session.query(Sale).filter_by(id=sid).one()
+    merchSold = search_session.query(Merch).filter_by(id=mid).one()
+
+    total += sale.numSold * merchSold.price
+
+    return str(round(total, 2))
 
 def getItem(string):
     search_session = Session()

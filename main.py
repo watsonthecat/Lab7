@@ -12,6 +12,9 @@ app = Flask(__name__)
 # @ signifies a decorator - way to wrap a function and modifying it's behavior
 
 
+'''Homepage'''
+
+
 @app.route('/', methods=['get', 'post'])
 def index():
     merchItems = merch_orm.merch_list()
@@ -26,30 +29,36 @@ def index():
         except RuntimeError as e:
             return render_template(error_text=e.args[0])
 
+    return render_template("index.html", merchItems=merchItems, saleItems=saleItems, eventList=eventList)
 
 
+'''Sale Management Page'''
 
 
+@app.route('/sales')
+def sales():
 
 
+    totalsList = []
 
-    return render_template("main.html", merchItems=merchItems, saleItems=saleItems, eventList=eventList)
+    saleItems = merch_orm.sales_list()
+
+    for item in saleItems:
+
+        totalsList.append(merch_orm.saleTotal(item.id, item.merchID))
+
+    return render_template("sales.html", saleItems=saleItems, totalsList=totalsList)
 
 
-# @app.route('/merch')
-# def merch():
+@app.route('/merch')
+def merch():
+
+    merchItems = merch_orm.merch_list()
+
+    return render_template("merch.html", merchItems=merchItems)
 #
-#     merchItems = merch_orm.merch_list()
 #
-#     return render_template("merch.html", merchItems=merchItems)
-#
-#
-# @app.route('/sales')
-# def sales():
-#
-#     saleItems = merch_orm.sales_list()
-#     return render_template("sales.html", saleItems=saleItems)
-#
+
 #
 # @app.route('/events')
 # def events():

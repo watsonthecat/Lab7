@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey, create_engine
+import merch_orm
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import events

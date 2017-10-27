@@ -1,0 +1,91 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Sale Management
+{% endblock %}
+
+{% block currentpage %}
+Sales
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+
+<section id="header" class="main-header shop-header inner-header">
+    <div class="container">
+
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="site-nav-bar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/merch">Merch</a></li>
+                        <li class="active"><a href="/sales">sales</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+        </div>
+        <div class="intro row">
+            <div class="overlay"></div>
+            <div class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    <li class="active">Sales</li>
+                </ol>
+            </div>
+        </div> <!-- /.intro.row -->
+    </div> <!-- /.container -->
+    <div class="nutral"></div>
+</section> <!-- /#header -->
+    <!-- Shop -->
+        <section class="shop">
+            <div class="container page-bgc">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="title-box">
+                            <p>Your</p>
+                            <h2 class="title mt0">Sale Records</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxed">
+                        {% for item in saleItems %}
+
+                            <div class="col-sm-6">
+                                <div class="shop-box-title">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h4>Sale ID#{{ item.id }}</h4>
+                                            <h4>MerchID #: <span class="thin">{{ item.merchID }}</span></h4>
+                                            <h4># of Items Sold: <span class="thin">{{ item.numSold }}</span></h4>
+                                            <h4>Sold @ Event ID: <span class="thin">{{ item.eventID }}</span></h4>
+                                        </div>
+                                        <div class="col-sm-6">
+
+                                            <p class="shop-price">
+                                                $ {{ totalsList[loop.index0] }}
+
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
