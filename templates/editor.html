@@ -67,6 +67,10 @@ Editor
                  <div class="row">
                     <div class="boxed">
                         {% for item in merchItems %}
+                            <form action="delStuff" method="post">
+                                <input type="hidden" name="merch-id" value="{{ item.id }}"/>
+                                <button type="submit">X</button>
+                            </form>
                             <div class="col-sm-6">
                                 <div class="shop-box-title">
                                     <div class="row">
