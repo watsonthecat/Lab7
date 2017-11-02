@@ -1,6 +1,10 @@
 {% extends "layouts/layout1.html" %}
 {% block title %}
-Merch Management
+Event Management
+{% endblock %}
+
+{% block currentpage %}
+Events
 {% endblock %}
 
 {% block content %}
@@ -23,9 +27,9 @@ Merch Management
                 <div class="collapse navbar-collapse" id="site-nav-bar">
                     <ul class="nav navbar-nav">
                         <li><a href="/">Home</a></li>
-                        <li class="active"><a href="/merch">Merch</a></li>
-                        <li ><a href="/sales">Sales</a></li>
-                        <li><a href="/events">Events</a></li>
+                        <li><a href="/merch">Merch</a></li>
+                        <li><a href="/sales">sales</a></li>
+                        <li class="active"><a href="/events">Events</a></li>
                         <li><a href="/dostuff">Editor</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -36,7 +40,7 @@ Merch Management
             <div class="col-sm-12">
                 <ol class="breadcrumb">
                     <li><a href="/">Home</a></li>
-                    <li class="active">Merch</li>
+                    <li class="active">Events</li>
                 </ol>
             </div>
         </div> <!-- /.intro.row -->
@@ -50,25 +54,21 @@ Merch Management
                     <div class="col-sm-12">
                         <div class="title-box">
                             <p>Your</p>
-                            <h2 class="title mt0">Inventory</h2>
+                            <h2 class="title mt0">Event Records</h2>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="boxed">
+                        {% for item in eventList %}
 
-                        {% for item in merchItems %}
                             <div class="col-sm-6">
                                 <div class="shop-box-title">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h4>{{ item.description }}</h4>
-                                            <h4>ID: <span class="thin">#{{ item.id }}</span></h4>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p class="shop-price">
-                                                $ {{ item.price }}
-                                            </p>
+                                            <h6>Event ID#{{ item.id }}</h6>
+                                            <h5>Venue: {{ item.venue }}</h5>
+                                            <h4>Date: <span class="thin">{{ item.month }}/{{ item.day }}/{{ item.year }}</span></h4>
                                         </div>
                                     </div>
                                 </div>

@@ -90,24 +90,18 @@ def new_merch():
     '''Get info from user, add new Merch Item'''
 
     new_merch = ui.get_new_merch_info()
-    merch_orm.add_object_to_db('Merch',new_merch)
+    merch_orm.add_object_to_db('Merch', new_merch)
 
 def new_event():
     '''Get info from user, add new Event'''
     new_event = ui.get_new_event_info()
-    merch_orm.add_object_to_db('Event',new_event)
+    merch_orm.add_object_to_db('Event', new_event)
 
 def new_sale():
     '''Get info from user, add new Sale'''
-    #show list of merch items for user reference (they probably haven't memorized merch ID #'s)
-    merch_list = merch_orm.merch_list()
-    ui.show_list(merch_list)
-    #show list of events for user reference (they probably haven't memorized event ID #'s)
-    event_list = merch_orm.event_list()
-    ui.show_event_list(event_list)
 
     new_sale = ui.get_new_sale_info()
-    merch_orm.add_object_to_db('Sale',new_sale)
+    merch_orm.add_object_to_db('Sale', new_sale)
 
 def merch_sale_records():
     '''Get Merch ID # from user, then query for results'''

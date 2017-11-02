@@ -3,6 +3,7 @@ from sales import Sale
 from merch import Merch
 import merch
 from events import Event
+from flask import request
 
 def display_menu_get_choice():
 
@@ -69,8 +70,8 @@ def show_sales_list(salesList):
 def get_new_merch_info():
     '''Get Description and Price of Merch Item from user'''
 
-    description = input('Enter Item Description: ') # request.form.get('description')
-    price = input('Enter Item Price: ') # request.form.get('price')
+    description = request.form.get('description')
+    price = request.form.get('price')
 
 
     return (description,price)
@@ -78,18 +79,18 @@ def get_new_merch_info():
 def get_new_event_info():
     '''Get Venue, Day, Month & Year of New Event from user'''
 
-    venue = input('Enter name of venue: ')
-    month = input('Enter month (MM): ')
-    day = input('Enter day (DD): ')
-    year = input('Enter year (YYYY): ')
+    venue = request.form.get('venue')
+    month = request.form.get('month')
+    day = request.form.get('day')
+    year = request.form.get('year')
 
     return (venue,month,day,year)
 
 def get_new_sale_info():
 
-    merchID = input('Enter MerchID of item sold: ')
-    numSold = input('Enter number of items sold: ')
-    eventID = input('Enter EventID where item was sold: ')
+    merchID = request.form.get('merchID')
+    numSold = request.form.get('numSold')
+    eventID = request.form.get('eventID')
 
     return (merchID,numSold,eventID)
 

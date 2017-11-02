@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import merch_orm
 import choiceManager
-import ui
+
 
 
 app = Flask(__name__)
@@ -17,19 +17,9 @@ app = Flask(__name__)
 
 @app.route('/', methods=['get', 'post'])
 def index():
-    merchItems = merch_orm.merch_list()
-    saleItems = merch_orm.sales_list()
-    eventList = merch_orm.event_list()
 
-    if request.method == 'POST':
 
-        try:
-            choiceManager.new_merch()
-
-        except RuntimeError as e:
-            return render_template(error_text=e.args[0])
-
-    return render_template("index.html", merchItems=merchItems, saleItems=saleItems, eventList=eventList)
+    return render_template("index.html")
 
 
 '''Sale Management Page'''
@@ -49,6 +39,7 @@ def sales():
 
     return render_template("sales.html", saleItems=saleItems, totalsList=totalsList)
 
+''' Merch Management Page '''
 
 @app.route('/merch')
 def merch():
@@ -56,15 +47,46 @@ def merch():
     merchItems = merch_orm.merch_list()
 
     return render_template("merch.html", merchItems=merchItems)
-#
-#
 
-#
-# @app.route('/events')
-# def events():
-#
-#     eventList = merch_orm.event_list()
-#     return render_template("events.html", eventList=eventList)
+
+''' Events Manager Page'''
+@app.route('/events')
+def events():
+
+    eventList = merch_orm.event_list()
+
+    return render_template("events.html", eventList=eventList)
+
+
+'''Make changes to existing Records '''
+
+@app.route('/dostuff', methods=['GET', 'POST'])
+def editor():
+    merchItems = merch_orm.merch_list()
+    saleItems = merch_orm.sales_list()
+    eventList = merch_orm.event_list()
+
+    totalsList = []
+
+    for item in saleItems:
+
+        totalsList.append(merch_orm.saleTotal(item.id, item.merchID))
+
+    if request.method == 'POST':
+        if request.form['submit'] == 'new_merch_btn':
+            choiceManager.new_merch()
+        elif request.form['submit'] == 'new_event_btn':
+            choiceManager.new_event()
+        elif request.form['submit'] == 'new_sale_btn':
+            choiceManager.new_sale()
+        else:
+            pass  # unknown
+    elif request.method == 'GET':
+
+        return render_template("editor.html", merchItems=merchItems, saleItems=saleItems, eventList=eventList,
+                               totalsList=totalsList)
+
+
 
 
 if __name__ == '__main__':
