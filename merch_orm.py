@@ -11,44 +11,44 @@ from merch import Merch
 import ui
 
 
-#Engine represents the core interface to the database
+# Engine represents the core interface to the database
 
-#The first argument is the url of the database;
-#this points to a sqlitedb saved in a file called phone.db
-#echo=True turns on SQLAlchemy logging for debugging
+# The first argument is the url of the database;
+# this points to a sqlitedb saved in a file called phone.db
+# echo=True turns on SQLAlchemy logging for debugging
 
-engine = create_engine('sqlite:///merchManager.db', echo = False)
+engine = create_engine('sqlite:///merchManager.db', echo = True)
 
-#Base = declarative_base() #All of the mapped classes inherit from this class
+# Base = declarative_base() #All of the mapped classes inherit from this class
 Base.metadata.create_all(engine) #Create a table for all the classes that use Base
 
 '''Need a session to talk to the database'''
-#A session manages mappings of objects to rows in the database
-#Make a session class -- only need to do this one time
-Session = sessionmaker(bind=engine) #using the engine created earlier
+# A session manages mappings of objects to rows in the database
+# Make a session class -- only need to do this one time
+Session = sessionmaker(bind=engine) # using the engine created earlier
 
 
 def setup():
-    #Ask the session to instantiate a session object
-    #Use the session object to talk to DB
+    # Ask the session to instantiate a session object
+    # Use the session object to talk to DB
     save_session = Session()
 
-    #Create a merch object; use named args to set values of the object
+    # Create a merch object; use named args to set values of the object
     item1 = Merch(description = 'Band Shirt', price = 20)
     item2 = Merch(description = 'Band CD', price = 10)
     item3 = Merch(description = 'Sticker/Pin', price = 5)
 
     for merch in [item1, item2, item3]:
-        #if it doesn't already exist
+        # if it doesn't already exist
         if not (getItem(merch.description)):
-            #Add merch object to session -- this tells the session that you want to map
+            # Add merch object to session -- this tells the session that you want to map
             # the merch object to a row in the DB
             save_session.add(merch)
             # The merch is pending - not yet saved
             # Doesn't save to DB until session is committed, or closed
 
     # Commit to save changes
-    save_session.commit() #now merch should be saved in DB
+    save_session.commit() # now merch should be saved in DB
     save_session.close()
 
 def merch_list():
@@ -92,7 +92,7 @@ def delete_object_by_id(ObjectType, id):
     #Use the session object to talk to DB
     save_session = Session()
 
-    item = get_object_by_ID(ObjectType,id)
+    item = get_object_by_ID(ObjectType, id)
 
     if (ObjectType == 'Merch'):
 
@@ -115,61 +115,62 @@ def delete_object_by_id(ObjectType, id):
 
 
 def add_object_to_db(ObjectType, *args):
-    #Ask the session to instantiate a session object
-    #Use the session object to talk to DB
+    # Ask the session to instantiate a session object
+    # Use the session object to talk to DB
     save_session = Session()
     argList = []
 
-    #convert arguments into list
+    # convert arguments into list
     for arg in args:
         argList.extend(arg)
 
     if (ObjectType == 'Merch'):
 
-        merch = Merch(description = argList[0], price = argList[1])
+        merch = Merch(description=argList[0], price=argList[1])
         save_session.add(merch)
         ui.message('Added Merch Item to DB')
 
     elif (ObjectType == 'Event'):
 
-        event = Event(venue = argList[0], month = argList[1], day = argList[2], year = argList[3])
+        event = Event(venue=argList[0], month=argList[1], day=argList[2], year=argList[3])
         save_session.add(event)
         ui.message('Added Event to DB')
 
     elif (ObjectType == 'Sale'):
 
-        sale = Sale(merchID = argList[0], numSold = argList[1], eventID = argList[2])
+        sale = Sale(merchID=argList[0], numSold=argList[1], eventID=argList[2])
         save_session.add(sale)
         ui.message('Added Sale to Records')
 
-
+    save_session.flush()
     save_session.commit()
     save_session.close()
 
+
 def get_object_by_ID(ObjectType, aid):
 
-    search_session=Session()
+    search_session = Session()
 
     while True:
-        if (ObjectType == 'Merch'):
+        if ObjectType == 'Merch':
             try:
-                item = search_session.query(Merch).filter_by(id = aid).one()
+                item = search_session.query(Merch).filter_by(id=aid).one()
                 break
             except exc.SQLAlchemyError:
-                #loops until it gets valid input
-                aid = (input('Please enter an ID from the list: '))
-        elif (ObjectType == 'Event'):
+                # loops until it gets valid input
+                aid = (input('Please enter a Merch ID from the list: '))
+        elif ObjectType == 'Event':
             try:
-                item = search_session.query(Event).filter_by(id = aid).one()
+                item = search_session.query(Event).filter_by(id=aid).one()
                 break
             except exc.SQLAlchemyError:
-                aid = (input('Please enter an ID from the list: '))
-        elif (ObjectType == 'Sale'):
+                aid = (input('Please enter a Event ID from the list: '))
+        elif ObjectType == 'Sale':
             try:
-                item = search_session.query(Sale).filter_by(id = aid).one()
+                item = search_session.query(Sale).filter_by(id=aid).one()
                 break
             except exc.SQLAlchemyError:
-                aid = (input('Please enter an ID from the list: '))
+                aid = (input('Please enter a Sale ID from the list: '))
 
     search_session.close()
     return item

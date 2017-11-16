@@ -40,40 +40,44 @@ def handle_choice(choice):
         ui.message('Please enter a valid selection')
 
 
-def delete_merch_item():
-    '''Show all Merch Items'''
-    show_items()
-    '''Get info from user, delete merch item'''
-    id = int(input('Enter ID of Merch Item you want to delete: '))
-    #TODO: Delete this record
-    merch_orm.delete_object_by_id('Merch',id)
+def delete_merch_item(mid):
+
+    ''' Takes mid from request.form.get and calls merch_orm delete by id '''
+
+    # show_items()
+    # '''Get info from user, delete merch item'''
+    # id = int(input('Enter ID of Merch Item you want to delete: '))
+
+    merch_orm.delete_object_by_id('Merch', mid)
 
 
-def delete_event():
-    '''Show all events'''
-    #show list of events for user reference (they probably haven't memorized event ID #'s)
-    event_list = merch_orm.event_list()
-    ui.show_event_list(event_list)
-    '''Get info from user, delete event record'''
-    id = int(input('Enter ID of event/show you want to delete:'))
-    #TODO: Delete this record
-    merch_orm.delete_object_by_id('Event',id)
+def delete_event(eid):
+    ''' Takes mid from request.form.get and calls merch_orm delete by id '''
+    # #show list of events for user reference (they probably haven't memorized event ID #'s)
+    # event_list = merch_orm.event_list()
+    # ui.show_event_list(event_list)
+    # '''Get info from user, delete event record'''
+    # id = int(input('Enter ID of event/show you want to delete:'))
 
-def delete_sale():
-    #show list of merch items for user reference (they probably haven't memorized merch ID #'s)
-    merch_list = merch_orm.merch_list()
-    ui.show_list(merch_list)
-    #show list of events for user reference (they probably haven't memorized event ID #'s)
-    event_list = merch_orm.event_list()
-    ui.show_event_list(event_list)
-    #show list of sales for user reference
-    sales_list = merch_orm.sales_list()
-    ui.show_sales_list(sales_list)
-    '''Get info from user, delete sale record'''
-    #get sale ID to delete
-    id = int(input('Enter ID of the Sale Record you want to delete: '))
-    #TODO: Delete this sale ID from db
-    merch_orm.delete_object_by_id('Sale',id)
+    merch_orm.delete_object_by_id('Event', eid)
+
+
+def delete_sale(sid):
+    ''' Takes mid from request.form.get and calls merch_orm delete by id '''
+    # #show list of merch items for user reference (they probably haven't memorized merch ID #'s)
+    # merch_list = merch_orm.merch_list()
+    # ui.show_list(merch_list)
+    # #show list of events for user reference (they probably haven't memorized event ID #'s)
+    # event_list = merch_orm.event_list()
+    # ui.show_event_list(event_list)
+    # #show list of sales for user reference
+    # sales_list = merch_orm.sales_list()
+    # ui.show_sales_list(sales_list)
+    # '''Get info from user, delete sale record'''
+    # #get sale ID to delete
+    # id = int(input('Enter ID of the Sale Record you want to delete: '))
+
+    merch_orm.delete_object_by_id('Sale', sid)
 
 
 def show_items():

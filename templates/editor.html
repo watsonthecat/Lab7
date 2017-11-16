@@ -69,7 +69,7 @@ Editor
                         {% for item in merchItems %}
                             <form action="delStuff" method="post">
                                 <input type="hidden" name="merch-id" value="{{ item.id }}"/>
-                                <button type="submit">X</button>
+                                <button type="submit" value="del_merch_btn" name="submit">X</button>
                             </form>
                             <div class="col-sm-6">
                                 <div class="shop-box-title">
@@ -97,7 +97,7 @@ Editor
                         </div>
                     </div>
             </div>
-            <form action="/dostuff"><h4>Create New Event:</h4><br>
+            <form action="dostuff" method="post"><h4>Create New Event:</h4><br>
                         Venue/Event Name:<br>
                         <input type="text" name="venue" value=""><br>
                         Month:<br>
@@ -106,12 +106,15 @@ Editor
                         <input type="float" name="day" value=""><br>
                         Year:<br>
                         <input type="float" name="year" value=""><br><br>
-                        <input type="submit" value="Submit" name="new_event_btn">
+                        <button type="submit" value="new_event_btn" name="submit">Submit</button>
             </form>
             <div class="row">
                     <div class="boxed">
                         {% for item in eventList %}
-
+                            <form action="delStuff" method="post">
+                                <input type="hidden" name="event-id" value="{{ item.id }}"/>
+                                <button type="submit" value="del_event_btn" name="submit">X</button>
+                            </form>
                             <div class="col-sm-6">
                                 <div class="shop-box-title">
                                     <div class="row">
@@ -134,18 +137,22 @@ Editor
                         </div>
                     </div>
             </div>
-            <form action="/dostuff"><h4>Record New Sale:</h4><br>
+            <form action="dostuff" method="post"><h4>Record New Sale:</h4><br>
                         Merch ID# of Item Sold:<br>
                         <input type="text" name=merchID" value=""><br>
                         Number of Items Sold:<br>
                         <input type="int" name="numSold" value=""><br>
                         Sold @ (Event ID#):<br>
                         <input type="int" name="eventID" value=""><br><br>
-                        <input type="submit" value="Submit" name="new_sale_btn">
+                        <button type="submit" value="new_sale_btn" name="submit">Submit</button>
             </form>
                 <div class="row">
                     <div class="boxed">
                         {% for item in saleItems %}
+                            <form action="delStuff" method="post">
+                                <input type="hidden" name="sale-id" value="{{ item.id }}"/>
+                                <button type="submit" value="del_sale_btn" name="submit">X</button>
+                            </form>
                             <div class="col-sm-6">
                                 <div class="shop-box-title">
                                     <div class="row">
@@ -157,7 +164,7 @@ Editor
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="shop-price">
-                                                $ {{ totalsList[loop.index0] }}
+{#                                                $ {{ totalsList[loop.index0] }}#}
                                             </p>
                                         </div>
                                     </div>
