@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import merch_orm
 import choiceManager
 
@@ -57,20 +57,19 @@ def events():
 
     return render_template("events.html", eventList=eventList)
 
-
+@app.route('/delStuff', methods=['post'])
+def del_stuff():
+    merch_id = request.form.get('merch-id')
+    if not merch_id is None:
+        pass
+    redirect("/dostuff")
 '''Make changes to existing Records '''
 
 @app.route('/dostuff', methods=['GET', 'POST'])
 def editor():
-    merchItems = merch_orm.merch_list()
-    saleItems = merch_orm.sales_list()
-    eventList = merch_orm.event_list()
+
 
     totalsList = []
-
-    for item in saleItems:
-
-        totalsList.append(merch_orm.saleTotal(item.id, item.merchID))
 
     if request.method == 'POST':
         if request.form['submit'] == 'new_merch_btn':
@@ -81,9 +80,16 @@ def editor():
             choiceManager.new_sale()
         else:
             pass  # unknown
-    elif request.method == 'GET':
 
-        return render_template("editor.html", merchItems=merchItems, saleItems=saleItems, eventList=eventList,
+    merchItems = merch_orm.merch_list()
+    saleItems = merch_orm.sales_list()
+    eventList = merch_orm.event_list()
+
+    for item in saleItems:
+
+        totalsList.append(merch_orm.saleTotal(item.id, item.merchID))
+
+    return render_template("editor.html", merchItems=merchItems, saleItems=saleItems, eventList=eventList,
                                totalsList=totalsList)
 
 
