@@ -63,6 +63,7 @@ def events():
 
 @app.route('/delStuff', methods=['POST'])
 def del_stuff():
+    print(request.form)
     merch_id = request.form.get('merch-id')
     event_id = request.form.get('event-id')
     sale_id = request.form.get('sale-id')
@@ -77,9 +78,9 @@ def del_stuff():
     if request.method == 'POST':
         if request.form['submit'] == 'del_merch_btn':
             choiceManager.delete_merch_item(merch_id)
-        elif request.form['submit'] == 'event-id':
+        elif request.form['submit'] == 'del_event_btn':
             choiceManager.delete_event(event_id)
-        elif request.form['submit'] == 'sale-id':
+        elif request.form['submit'] == 'del_sale_btn':
             choiceManager.delete_sale(sale_id)
         else:
             pass  # unknown
@@ -96,7 +97,7 @@ def del_stuff():
 
 @app.route('/dostuff', methods=['GET', 'POST'])
 def editor():
-
+    print(request.form)
     totalsList = []
 
     if request.method == 'POST':

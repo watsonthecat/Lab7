@@ -69,7 +69,8 @@ def show_sales_list(salesList):
 
 def get_new_merch_info():
     '''Get Description and Price of Merch Item from user'''
-
+    # Not getting ID here?
+    # ID is generated when I add object to DB
     description = request.form.get('description')
     price = request.form.get('price')
 
@@ -87,11 +88,10 @@ def get_new_event_info():
     return (venue,month,day,year)
 
 def get_new_sale_info():
-
     merchID = request.form.get('merchID')
     numSold = request.form.get('numSold')
     eventID = request.form.get('eventID')
-
+    print(merchID, numSold, eventID)
     return (merchID,numSold,eventID)
 
 def get_id():
